@@ -2,12 +2,14 @@ const form = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo");
 const todoList = document.querySelector(".list-group");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
+const secondCardBody = document.querySelectorAll(".card-body")[1];
 
 eventListeners();
 
-function eventListeners() { //Tüm event Listenerlar
+function eventListeners() {
     form.addEventListener("submit", addTodo);
     document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
+    secondCardBody.addEventListener("click", deleteTodo);
 
 }
 
@@ -85,4 +87,26 @@ function addTodoToUI(newTodo) {
 
     todoList.appendChild(listItem);
     todoInput.value = "";
+}
+
+function deleteTodo(e) {
+
+    if (e.target.className === "fa fa-remove") {
+        const getli = e.target.parentElement.parentElement;
+        getli.remove();
+        deleteTodoFromStorage(getli.textContent);
+        showAlert("success", "Todo Silindi");
+    }
+}
+
+function deleteTodoFromStorage(deleteTodo) {
+    let todos = getTodosFromStorage();
+
+    todos.forEach(function (todo, index) {
+        if (todo === deleteTodo) {
+            todos.splice(index, 1);
+        }
+
+    });
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
