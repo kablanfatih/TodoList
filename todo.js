@@ -59,11 +59,11 @@ function showAlert(type, messagge) {
 function getTodosFromStorage() {
     let todos;
 
+    todos = JSON.parse(localStorage.getItem("todos"));
     if (localStorage.getItem("todos") === null) {
         todos = [];
-    } else {
-        todos = JSON.parse(localStorage.getItem("todos"));
     }
+
     return todos;
 }
 
@@ -93,10 +93,10 @@ function addTodoToUI(newTodo) {
     todoInput.value = "";
 }
 
-function deleteTodo(e) {
+function deleteTodo(i) {
 
-    if (e.target.className === "fa fa-remove") {
-        const getli = e.target.parentElement.parentElement;
+    if (i.target.className === "fa fa-remove") {
+        const getli = i.target.parentElement.parentElement;
         getli.remove();
         deleteTodoFromStorage(getli.textContent);
         showAlert("success", "Todo Silindi");
