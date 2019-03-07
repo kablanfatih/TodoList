@@ -4,6 +4,8 @@ const todoList = document.querySelector(".list-group");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
 const secondCardBody = document.querySelectorAll(".card-body")[1];
 const filter = document.querySelector("#filter");
+const clearButton = document.querySelector("#clear-todos");
+
 eventListeners();
 
 function eventListeners() {
@@ -11,6 +13,7 @@ function eventListeners() {
     document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
     secondCardBody.addEventListener("click", deleteTodo);
     filter.addEventListener("keyup", filterTodos);
+    clearButton.addEventListener("click", clearAllTodos);
 
 }
 
@@ -124,4 +127,14 @@ function filterTodos(i) {
             listItem.setAttribute("style", "display : block");
         }
     });
+}
+
+function clearAllTodos() {
+    if (confirm("Tümünü Silmek İstediğinize Eminmisiniz")) {
+
+        while (todoList.firstElementChild != null) {
+            todoList.removeChild(todoList.firstElementChild);
+        }
+        localStorage.removeItem("todos");
+    }
 }
